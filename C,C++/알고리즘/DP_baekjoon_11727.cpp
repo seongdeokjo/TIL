@@ -1,5 +1,5 @@
 /* 
-	baekjoon 11727 : 2xn 타일링 문제2 
+	백준 - 11727 : 2xn 타일링 문제2 
 */
 
 #include <stdio.h>

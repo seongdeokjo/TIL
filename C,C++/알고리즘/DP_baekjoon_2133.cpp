@@ -1,5 +1,5 @@
 /* 
-	baekjoon:2133 타일 채우기 
+	백준 - 2133 타일 채우기 
 */
 
 #include <stdio.h>

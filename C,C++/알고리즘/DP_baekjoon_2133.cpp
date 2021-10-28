@@ -1,5 +1,5 @@
 /* 
-	baekjoon - 2133 fill the til  
+	baekjoon - 2133 tile fill  
 */
 
 #include <stdio.h>

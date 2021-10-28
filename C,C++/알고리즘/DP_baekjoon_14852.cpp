@@ -1,5 +1,5 @@
 /* 
-	백준 -  14852 : 타일 채우기 3 
+	baekjoon -  14852 : tile fill 3 
 */
 
 #include <stdio.h>

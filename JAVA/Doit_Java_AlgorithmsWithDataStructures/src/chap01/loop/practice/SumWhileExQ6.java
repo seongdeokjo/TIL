@@ -2,7 +2,7 @@ package chap01.loop.practice;
 
 import java.util.Scanner;
 
-public class Q6 {
+public class SumWhileExQ6 {
 	// 실습 1-4에서 while문이 종료될 때 변수 i 값이 n + 1 이 됨을 확인할 것.
 	public static void main(String[] args) {
 		Scanner stdIn = new Scanner(System.in);

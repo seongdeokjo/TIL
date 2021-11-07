@@ -2,7 +2,7 @@ package chap01.loop.practice;
 
 import java.util.Scanner;
 
-public class Q11 {
+public class DigitsNoQ11 {
 	// 양의 정수를 입력하고 자릿수를 출력하는 프로그램을 작성
 	// ex) 135 -> 그 수는 3자리 
 	public static void main(String[] args) {

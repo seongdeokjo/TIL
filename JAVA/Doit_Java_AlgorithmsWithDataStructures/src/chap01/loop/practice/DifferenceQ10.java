@@ -2,7 +2,7 @@ package chap01.loop.practice;
 
 import java.util.Scanner;
 
-public class Q10 {
+public class DifferenceQ10 {
 	// a,b 정수를 입력하고 b - a를 출력하는 프로그램 작성
 	// b 가 a 보다 큰 값을 입력받도록
 	public static void main(String[] args) {

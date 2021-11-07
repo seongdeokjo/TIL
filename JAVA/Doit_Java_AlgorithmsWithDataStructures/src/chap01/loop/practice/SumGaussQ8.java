@@ -2,7 +2,7 @@ package chap01.loop.practice;
 
 import java.util.Scanner;
 
-public class Q8 {
+public class SumGaussQ8 {
 	// 가우스 덧셈 공식
 	public static void main(String[] args) {
 		Scanner stdIn = new Scanner(System.in);

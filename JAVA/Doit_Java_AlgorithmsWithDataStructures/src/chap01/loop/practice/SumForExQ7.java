@@ -2,7 +2,7 @@ package chap01.loop.practice;
 
 import java.util.Scanner;
 
-public class Q7 {
+public class SumForExQ7 {
 	public static void main(String[] args) {
 		Scanner stdIn = new Scanner(System.in);
 		System.out.println("1부터 n까지의 합을 구합니다.");

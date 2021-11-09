@@ -1,8 +1,8 @@
-package chap02.multiDimensionalArray.training;
+package chap02.multiDimensionalArray.practice;
 
 import java.util.Scanner;
 
-public class DayOfYear {
+public class DayofYearWhileQ8 {
 	// 그 해 경과 일 수를 구함
 	
 	//각 달의 일수 
@@ -18,11 +18,10 @@ public class DayOfYear {
 	
 	// 서기 y년 m월 d일의 그 해 경과 일 수를 구함
 	static int dayOfYear(int y, int m, int d) {
-		int days = d; // 일 수
-		for(int i = 1; i < m; i++) { // 1월~(m-1)월의 일 수를 더함
-			days += mdays[isLeap(y)][i - 1];
+		while(--m != 0) {
+			d += mdays[isLeap(y)][m -1];
 		}
-		return days;
+		return d;
 	}
 	
 	public static void main(String[] args) {

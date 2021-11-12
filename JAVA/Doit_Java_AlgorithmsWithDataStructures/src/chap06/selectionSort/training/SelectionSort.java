@@ -3,6 +3,7 @@ package chap06.selectionSort.training;
 import java.util.Scanner;
 
 public class SelectionSort {
+	// 단순 선택 정렬
 	// a[idx1]와 a[idx2]의 값을 바꾼다.
 		static void swap(int[] a, int idx1, int idx2) {
 			int t = a[idx1];
@@ -26,7 +27,7 @@ public class SelectionSort {
 		public static void main(String[] args) {
 			Scanner stdIn = new Scanner(System.in);
 
-			System.out.println("버블 정렬");
+			System.out.println("단순 선택 정렬");
 			System.out.print("요솟수 : ");
 			int n = stdIn.nextInt();
 			int[] x = new int[n];

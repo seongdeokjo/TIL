@@ -17,20 +17,28 @@ public class BMmatch {
 		}
 		for(pt = 0; pt < patLen - 1; pt++) {
 			skip[pat.charAt(pt)] = patLen - pt - 1;		// pt == patLen - 1
+			System.out.println("patLen - pt - 1 = "+(patLen - pt - 1));
+			System.out.println("skip["+pat.charAt(pt)+"] = "+skip[pat.charAt(pt)]);
 		}
 		
 		// 검색
 		while(pt < txtLen) {
+			System.out.println("검색 ----------------------------");
 			pp = patLen - 1;		// pat의 끝 문자에 주목
-			
+			System.out.println("1. pp = "+pp +", pt = "+pt);
 			while(txt.charAt(pt) == pat.charAt(pp)) {
+				System.out.println("txt.charAt("+pt+") = "+txt.charAt(pt)+", pat.charAt("+pp+") = "+pat.charAt(pp));
 				if(pp == 0) {
+					System.out.println("2. pt = "+pt);
 					return pt;
 				}
 				pp--;
 				pt--;
+				System.out.println("3. pp = "+pp + ", pt = "+pt);
 			}
+			System.out.println("skip[txt.charAt("+pt+")] = "+skip[txt.charAt(pt)]+",  patLen - pp = "+(patLen - pp));
 			pt += (skip[txt.charAt(pt)] > patLen - pp) ? skip[txt.charAt(pt)] : patLen - pp;
+			System.out.println("4. pt = "+pt);
 		}
 		return -1;
 	}

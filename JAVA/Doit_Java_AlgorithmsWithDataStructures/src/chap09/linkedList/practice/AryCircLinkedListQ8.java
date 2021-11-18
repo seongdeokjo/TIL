@@ -2,21 +2,20 @@ package chap09.linkedList.practice;
 
 import java.util.Comparator;
 
-public class AryLinkedListTQ6<E> {
-	// 연결 리스트 클래스(배열 커서 버전)
-	
+// 연결 리스트 클래스 (배열 커서 버전)
+public class AryCircLinkedListQ8<E> {
 	// 노드
-	class Node<E>{
+	class Node<E> {
 		private E data;
 		private int next;
 		private int dnext;
-		
+
 		void set(E data, int next) {
 			this.data = data;
 			this.next = next;
 		}
 	}
-	
+
 	private Node<E>[] n;
 	private int size;
 	private int max;
@@ -25,21 +24,23 @@ public class AryLinkedListTQ6<E> {
 	private int crnt;
 	private int deleted;
 	private static final int NULL = -1;
-	
-	public AryLinkedListTQ6(int capacity){
+
+	// 생성자
+	public AryCircLinkedListQ8(int capacity) {
 		head = tail = crnt = max = deleted = NULL;
 		try {
 			n = new Node[capacity];
-			for(int i = 0; i < capacity; i++) {
+			for (int i = 0; i < capacity; i++) {
 				n[i] = new Node<E>();
+				size = capacity;
 			}
-			size = capacity;
-		}catch(OutOfMemoryError e) {
+
+		} catch (OutOfMemoryError e) {
 			size = 0;
 		}
 	}
 	
-	// 다음에 삽입하는 record의 index를 구한다.
+	// 다음에 삽입하는 record의 index를 구합니다.
 	private int getInsertIndex() {
 		if(deleted == NULL) {
 			if(max < size) {
@@ -53,8 +54,8 @@ public class AryLinkedListTQ6<E> {
 			return rec;
 		}
 	}
-	
-	// record idx를 free 리스트에 등록
+
+	// recode idx를 free 리스트에 등록
 	private void deleteIndex(int idx) {
 		if(deleted == NULL) {
 			deleted = idx;
@@ -68,33 +69,40 @@ public class AryLinkedListTQ6<E> {
 	
 	// 노드를 검색
 	public E search(E o, Comparator<? super E> c) {
-		int ptr = head;
-		
-		while(ptr != NULL) {
-			if(c.compare(o, n[ptr].data) == 0) {
-				crnt = ptr;
-				return n[ptr].data;
-			}
-			ptr = n[ptr].next;
+		if(head != NULL) {
+			int ptr = head;
+			
+			do {
+				if(c.compare(o, n[ptr].data) == 0) {
+					crnt = ptr;
+					return n[ptr].data;
+				}
+				ptr = n[ptr].next;
+			}while(ptr != head);
 		}
 		return null;
 	}
 	
 	// 머리에 노드를 삽입
 	public void addFirst(E o) {
-		boolean empty = (tail == NULL);
-		int ptr = head;
-		int rec = getInsertIndex();
-		if(rec != NULL) {
-			head = crnt = rec;
-			n[head].set(o, ptr);
-			if(empty) {
-				tail = crnt;
+		if(head == NULL) {
+			int rec = getInsertIndex();
+			if(rec != NULL) {
+				head = tail = crnt = rec;
+				n[head].set(o, rec);
+			}
+		}else {
+			int ptr = head;
+			int rec = getInsertIndex();
+			if(rec != NULL) {
+				head = crnt = rec;
+				n[head].set(o, ptr);
+				n[tail].next = head;
 			}
 		}
 	}
 	
-	// 꼬리에 노드를 삽입 
+	// 꼬리에 노드를 삽입
 	public void addLast(E o) {
 		if(head == NULL) {
 			addFirst(o);
@@ -102,7 +110,7 @@ public class AryLinkedListTQ6<E> {
 			int rec = getInsertIndex();
 			if(rec != NULL) {
 				n[tail].next = crnt = rec;
-				n[rec].set(o, NULL);
+				n[rec].set(o, head);
 				tail = rec;
 			}
 		}
@@ -111,11 +119,14 @@ public class AryLinkedListTQ6<E> {
 	// 머리 노드를 삭제
 	public void removeFirst() {
 		if(head != NULL) {
-			int ptr = n[head].next;
-			deleteIndex(head);
-			head = crnt = ptr;
-			if(head == NULL) {
-				tail = NULL;
+			if(head == tail) {
+				deleteIndex(head);
+				head = tail = crnt = NULL;
+			}else {
+				int ptr = n[head].next;
+				deleteIndex(head);
+				head = crnt = ptr;
+				n[tail].next = head;
 			}
 		}
 	}
@@ -123,17 +134,17 @@ public class AryLinkedListTQ6<E> {
 	// 꼬리 노드를 삭제
 	public void removeLast() {
 		if(head != NULL) {
-			if(n[head].next == NULL) {
+			if(head == tail) {
 				removeFirst();
 			}else {
 				int ptr = head;
 				int pre = head;
 				
-				while(n[ptr].next != NULL) {
+				while(n[ptr].next != head) {
 					pre = ptr;
 					ptr = n[ptr].next;
 				}
-				n[pre].next = NULL;
+				n[pre].next = head;
 				deleteIndex(ptr);
 				tail = crnt = pre;
 			}
@@ -152,7 +163,7 @@ public class AryLinkedListTQ6<E> {
 				
 				while(n[ptr].next != p) {
 					ptr = n[ptr].next;
-					if(ptr == NULL) {
+					if(ptr == head) {
 						return;
 					}
 				}
@@ -162,6 +173,7 @@ public class AryLinkedListTQ6<E> {
 			}
 		}
 	}
+	
 	
 	// 선택 노드를 삭제
 	public void removeCurrentNode() {
@@ -176,15 +188,6 @@ public class AryLinkedListTQ6<E> {
 		crnt = NULL;
 	}
 	
-	// 선택 노드를 하나 뒤쪽으로 진행
-	public boolean next() {
-		if(crnt == NULL || n[crnt].next == NULL) {
-			return false;
-		}
-		crnt = n[crnt].next;
-		return true;
-	}
-	
 	// 선택 노드를 출력
 	public void printCurrentNode() {
 		if(crnt == NULL) {
@@ -196,24 +199,29 @@ public class AryLinkedListTQ6<E> {
 	
 	// 모든 노드를 출력
 	public void dump() {
-		int ptr = head;
-		
-		while(ptr != NULL) {
-			System.out.println(n[ptr].data.toString());
-			ptr = n[ptr].next;
+		if(head != NULL) {
+			int ptr = head;
+			
+			do {
+				System.out.println(n[ptr].data.toString());
+				ptr = n[ptr].next;
+			}while(ptr != head);
 		}
 	}
 	
 	// comparator c에 의해 서로 같다고 보는 노드를 모두 삭제
 	public void purge(Comparator<? super E> c) {
+		if(head == NULL) {
+			return;
+		}
 		int ptr = head;
 		
-		while(ptr != NULL) {
+		do {
 			int count = 0;
 			int ptr2 = ptr;
 			int pre = ptr;
 			
-			while(n[pre].next != NULL) {
+			while(n[pre].next != head) {
 				ptr2 = n[pre].next;
 				if(c.compare(n[ptr].data, n[ptr2].data) == 0) {
 					remove(ptr2);
@@ -229,22 +237,26 @@ public class AryLinkedListTQ6<E> {
 				remove(ptr);
 				ptr = temp;
 			}
-		}
+		}while(n[ptr].next != head);
 		crnt = head;
 	}
 	
 	// 머리부터 n개 뒤 노드의 데이터에 대한 참조를 반환
 	public E retrieve(int n) {
-		int ptr = head;
-		
-		while(n >= 0 && ptr != NULL) {
-			if(n-- == 0) {
-				crnt = ptr;
-				return this.n[ptr].data;
+		if(head != NULL) {
+			int ptr = head;
+			
+			while(n >= 0) {
+				if(--n == 0) {
+					crnt = ptr;
+					return this.n[ptr].data;
+				}
+				ptr = this.n[ptr].next;
+				if(ptr == head) {
+					break;
+				}
 			}
-			ptr = this.n[ptr].next;
 		}
 		return null;
 	}
-	
 }
